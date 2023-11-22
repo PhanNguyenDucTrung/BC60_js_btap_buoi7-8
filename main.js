@@ -77,8 +77,6 @@ const ascendingNumbers = numbers => {
 };
 
 const findFirstPrimeNumber = numbers => {
-    console.log(numbers);
-
     for (let i = 0; i < numbers.length; i++) {
         if (numbers[i] == 2) {
             return numbers[i];
@@ -98,7 +96,7 @@ const findFirstPrimeNumber = numbers => {
             }
         }
     }
-    return 'không tìm thấy số nguyên tố';
+    return;
 };
 
 const countingInteger = numbers => {
@@ -122,7 +120,7 @@ const compareQuantityPositiveNegative = numbers => {
             countNegative++;
         }
     }
-    console.log(countPositive, countNegative);
+
     if (countPositive > countNegative) {
         return 'Số dương > số âm';
     }
@@ -150,9 +148,9 @@ const hienThiChuoiSoFunc = numbers => {
     return content;
 };
 
-// Events
-const btnThemSo = selEle('btnThemSo');
-btnThemSo.addEventListener('click', () => {
+////////////////////////////////////// Events
+// Thêm số + In chuỗi số
+selEle('btnThemSo').addEventListener('click', () => {
     // Thêm số
     const themSo = selEle('themSo');
     const so = themSo.value * 1;
@@ -160,31 +158,34 @@ btnThemSo.addEventListener('click', () => {
 
     // In chuỗi số ra màn hình
     selEle('hienThiChuoiSo').innerHTML = '👉 ' + hienThiChuoiSoFunc(numbersArr);
-
-    // Tổng số dương
-    // In tổng số dương ra màn hình
-    selEle('hienThiTongSoDuong').innerHTML = '👉 ' + sumPositiveNumbers([...numbersArr]);
-
-    // Đếm số dương
-    // In số số dương ra màn hình
-    selEle('hienThiDemSoDuong').innerHTML = '👉 ' + countPositiveNumbers([...numbersArr]);
-
-    // Hiển thị số nhỏ nhất
-    // In số nhỏ nhất ra màn hình
-    selEle('hienThiSoNhoNhat').innerHTML = '👉 ' + findMinNumber([...numbersArr]);
-
-    // In số dương nhỏ nhất ra màn hình
-    selEle('hienThiSoDuongNhoNhat').innerHTML = '👉 ' + findMinPositiveNumber([...numbersArr]);
-
-    // In số chẵn cuối cùng ra màn hình
-    selEle('hienThiSoChanCuoiCung').innerHTML = '👉 Số chẵn cuối cùng là: ' + findLastEvenNumber([...numbersArr]);
-
-    // In sắp xếp tăng dần ra màn hình
-    selEle('hienThiSapXepTangDan').innerHTML =
-        '👉 Mảng sau khi sắp xếp: ' + hienThiChuoiSoFunc(ascendingNumbers([...numbersArr]));
 });
 
-// Hoán đổi hai số Event
+// Tổng số dương
+selEle('btnTongSoDuong').addEventListener('click', function () {
+    selEle('hienThiTongSoDuong').innerHTML = '👉 ' + sumPositiveNumbers([...numbersArr]);
+});
+
+// Đếm số dương
+selEle('btnDemSoDuong').addEventListener('click', function () {
+    selEle('hienThiDemSoDuong').innerHTML = '👉 ' + countPositiveNumbers([...numbersArr]);
+});
+
+// Tìm số nhỏ nhất
+selEle('btnSoNhoNhat').addEventListener('click', function () {
+    selEle('hienThiSoNhoNhat').innerHTML = '👉 ' + findMinNumber([...numbersArr]);
+});
+
+// Tìm số dương nhỏ nhất
+selEle('btnSoDuongNhoNhat').addEventListener('click', function () {
+    selEle('hienThiSoDuongNhoNhat').innerHTML = '👉 ' + findMinPositiveNumber([...numbersArr]);
+});
+
+// Tìm số chẵn cuối cùng
+selEle('btnSoChanCuoiCung').addEventListener('click', function () {
+    selEle('hienThiSoChanCuoiCung').innerHTML = '👉 Số chẵn cuối cùng là: ' + findLastEvenNumber([...numbersArr]);
+});
+
+// Đổi chỗ hai số
 selEle('btnDoiChoHaiSo').addEventListener('click', function () {
     // Lấy vị trí hai số
     const numPos1 = selEle('numPosition1').value * 1;
@@ -209,18 +210,30 @@ selEle('btnDoiChoHaiSo').addEventListener('click', function () {
     selEle('hienThiDoiChoHaiSo').innerHTML = '👉 Mảng sau khi đổi: ' + hienThiChuoiSoFunc(numbersArr);
 });
 
-// Tìm số nguyên tố đầu tiên Event
-selEle('btnSoNguyenDauTien').addEventListener('click', function () {
-    selEle('hienThiSoNguyenDauTien').innerHTML = '👉 Số nguyên tố đầu tiên là ' + findFirstPrimeNumber([...numbersArr]);
+// Sắp xếp tăng dần
+selEle('btnSapXepTangDan').addEventListener('click', function () {
+    selEle('hienThiSapXepTangDan').innerHTML =
+        ascendingNumbers([...numbersArr]).length == 0
+            ? '👉 Chuỗi số rỗng, vui lòng thêm số'
+            : `👉 Mảng sau khi sắp xếp: ${hienThiChuoiSoFunc(ascendingNumbers([...numbersArr]))}`;
 });
 
-// Đếm số nguyên Event
+// Tìm số nguyên tố đầu tiên
+selEle('btnSoNguyenDauTien').addEventListener('click', function () {
+    selEle('hienThiSoNguyenDauTien').innerHTML =
+        findFirstPrimeNumber([...numbersArr]) == undefined
+            ? '👉 Không tìm thấy số nguyên tố'
+            : `👉 Số nguyên tố đầu tiên là ${findFirstPrimeNumber([...numbersArr])}`;
+});
+
+// Đếm số nguyên
 selEle('btnDemSoNguyen').addEventListener('click', function () {
     selEle('hienThiDemSoNguyen').innerHTML = countingInteger([...numbersArr])
         ? `👉 Có ${countingInteger([...numbersArr])} số nguyên`
         : '👉 Không có số nguyên nào';
 });
 
+// So sánh số lượng âm - dương
 selEle('btnSoSanhAmDuong').addEventListener('click', function () {
     selEle('hienThiSoSanhAmDuong').innerHTML = `👉 ${compareQuantityPositiveNegative([...numbersArr])}`;
 });
