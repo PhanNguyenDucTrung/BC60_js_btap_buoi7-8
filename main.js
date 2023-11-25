@@ -33,7 +33,7 @@ const findMinNumber = numbers => {
             min = numbers[i];
         }
     }
-    return min;
+    return numbers.length !== 0 ? min : 'Chuỗi số rỗng. Vui lòng nhập số.';
 };
 
 const findMinPositiveNumber = numbers => {
